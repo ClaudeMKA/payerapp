@@ -16,7 +16,7 @@ let cordonners = [];
 input.addEventListener('input', function() {
     const value = this.value.trim();
     if (value.length >= 0) {
-         cordonners = [];
+        cordonners = [];
         const url = `https://api-adresse.data.gouv.fr/search/?q=${value}`;
         fetch(url)
             .then(response => response.json())
@@ -62,14 +62,26 @@ input.addEventListener('input', function() {
     }
 });
 
-
+document.addEventListener('click', function(event) {
+    const isClickInsideDropdown = dropdownContent.contains(event.target);
+    const isClickInsideInput = input.contains(event.target);
+    if (!isClickInsideDropdown && !isClickInsideInput) {
+        dropdownContent.classList.remove('show');
+    }
+});
 
 function useCoordinates() {
-    const prayerTimesElement = document.getElementById("prayer-times");
-    prayerTimesElement.innerHTML = ''
+    const fajrTimeElement = document.getElementById("fajr-time");
+    const dhuhurTimeElement = document.getElementById("dhuhur-time");
+    const asrTimeElement = document.getElementById("asr-time");
+    const maghribTimeElement = document.getElementById("maghrib-time");
+    const ishaTimeElement = document.getElementById("isha-time");
+    const midnightTimeElement = document.getElementById("midnight-time");
+
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
+
     if (cordonners.length > 0) {
         const [longitude, latitude] = cordonners[0];
         const url = `https://api.aladhan.com/v1/calendar/${year}/${month}?latitude=${latitude}&longitude=${longitude}&method=2`;
@@ -78,14 +90,20 @@ function useCoordinates() {
             .then(data => {
                 console.log(data)
                 const prayerTimes = data.data;
+
                 // Trouver l'objet de calendrier pour la date actuelle
                 const currentDate = new Date();
                 const todayPrayerTime = prayerTimes.find(prayerTime => {
                     const prayerDate = new Date(prayerTime.date.readable);
-                    return prayerDate.getDate() === currentDate.getDate() && prayerDate.getMonth() === currentDate.getMonth() && prayerDate.getFullYear() === currentDate.getFullYear();
+                    return (
+                        prayerDate.getDate() === currentDate.getDate() &&
+                        prayerDate.getMonth() === currentDate.getMonth() &&
+                        prayerDate.getFullYear() === currentDate.getFullYear()
+                    );
                 });
+
                 // Afficher les horaires de prière pour la date actuelle
-                if(todayPrayerTime){
+                if (todayPrayerTime) {
                     const timings = todayPrayerTime.timings;
                     // Modifier la chaîne de caractères pour enlever (CEST) de l'heure
                     const fajrTime = timings.Fajr.split(" ")[0];
@@ -93,37 +111,16 @@ function useCoordinates() {
                     const asrTime = timings.Asr.split(" ")[0];
                     const maghribTime = timings.Maghrib.split(" ")[0];
                     const ishaTime = timings.Isha.split(" ")[0];
+                    const midnightTime = timings.Midnight.split(" ")[0];
 
-                    const prayerTimesElement = document.getElementById("prayer-times");
-                        prayerTimesElement.innerHTML = ` <div class="times fajr">                  <p> Fajr </p>  
-          <p> ${fajrTime}</p>
-    </div>
-    <div class="times dhuhur">
-      <p> Dhuhr </p> 
-      <p>${dhuhurTime}</p>
-    </div>
-    <div class="times asr">
-      <p> ASR </p> 
-      <p>${asrTime}</p>
-    </div>
-    <div class="times maghrib">
-      <p> Maghrib </p>
-      <p>${maghribTime}</p>
-    </div>
-    <div class="times isha">
-      <p> Isha </p> 
-      <p>${ishaTime}</p>
-    </div>
-    <div class="shourouq_midnight">
-      <div class="shourouq">
-        <p class="shourouq"> Shorooq ${timings.Sunrise}</p>
-        <div class="barre_prayer"></div>
-      </div>
-      <div class="midnight">
-        <p class="midnight"> Moitiée de la nuit ${timings.Midnight}</p>
-        <div class="barre_prayer"></div>
-      </div>
-    </div>`;
+                    // Mettre à jour les éléments HTML avec les horaires de prière
+                    fajrTimeElement.textContent = fajrTime;
+                    dhuhurTimeElement.textContent = dhuhurTime;
+                    asrTimeElement.textContent = asrTime;
+                    maghribTimeElement.textContent = maghribTime;
+                    ishaTimeElement.textContent = ishaTime;
+                    midnightTimeElement.textContent = midnightTime;
+
                 } else {
                     console.log("Aucun horaire de prière n'a été trouvé pour la date actuelle");
                 }
@@ -132,60 +129,35 @@ function useCoordinates() {
     }
 }
 
-// Définition des paramètres
-const sourah = 2;
-const verse = 255;
-const translation = 'fr.hamidullah';
+const prayerCards = document.querySelectorAll('.card p');
 
-// Construction de l'URL de la requête
-const url = `http://api.alquran.cloud/v1/ayah/${sourah}:${verse}/${translation}`;
+// Ajouter la classe "show" sur chaque élément "p" et les afficher progressivement
 
-// Envoi de la requête
-fetch('http://api.alquran.cloud/v1/ayah/1:1/fr.hamidullah')
-    .then(response => response.json())
-    .then(data => {
-        console.log('Traduction en français : ', data.data.text);
+dropdownContent.addEventListener('click', function() {
+    prayerCards.forEach((card) => {
+        card.classList.add('show');
+        for (let i = 0; i < prayerCards.length; i++) {
+            prayerCards[i].style.opacity = 0;
+
+        }
+        setTimeout(() => {
+            prayerCards.forEach((card) => {
+                card.classList.remove('show');
+                for (let i = 0; i < prayerCards.length; i++) {
+                    prayerCards[i].style.opacity = 1;
+                }
+            })
+        }, 500);
     })
-    .catch(error => {
-        console.error(error);
-    });
 
-
-
-const form = document.querySelector('.sourate');
-const resultat = document.querySelector('#resultat');
-const resultat2 = document.querySelector('#resultat2');
-const resultat3 = document.querySelector('#resultat3');
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault(); // Empêche l'envoi du formulaire
-
-    const sourate = form.elements.sourate.value;
-    const verset = form.elements.verset.value;
-    resultat.innerHTML = '';
-    resultat2.innerHTML = '';
-
-    Promise.all([
-        fetch(`http://api.alquran.cloud/v1/surah/${sourate}/ar.alafasy`).then(response => response.json()),
-        fetch(`http://api.alquran.cloud/v1/surah/${sourate}/fr.hamidullah`).then(response => response.json())
-    ])
-        .then(([arabe, francais]) => {
-            const ayahs = arabe.data.ayahs;
-            const traductions = francais.data.ayahs.reduce((acc, ayah) => {
-                acc[ayah.numberInSurah] = ayah.text;
-                return acc;
-            }, {});
-            let texteArabe = '';
-            ayahs.forEach(ayah => {
-                texteArabe += `<p><strong>${ayah.numberInSurah}. </strong>${ayah.text}</p>`;
-                texteArabe += `<p>${traductions[ayah.numberInSurah]}</p>`;
-            });
-            resultat.innerHTML = `<p><strong>Traduction en arabe :</strong></p>${texteArabe}`;
+    // Supprimer la classe 'show' après un certain temps (par exemple 5 secondes)
+    setTimeout(() => {
+        prayerCards.forEach((card) => {
+            card.classList.remove('show');
+            for (let i = 0; i < prayerCards.length; i++) {
+                prayerCards[i].style.opacity = 1;
+            }
         })
-        .catch(error => {
-            console.error(error);
-        });
+    }, 5000);
 });
-
-
 
