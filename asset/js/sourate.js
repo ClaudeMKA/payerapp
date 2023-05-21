@@ -1,28 +1,23 @@
-console.log('dd')
-const btnPlay = document.querySelector('#btn-play')
-btnPlay.addEventListener('click', async () => {
-    try {
-        const response = await fetch(audioUrl);
-        const blob = await response.blob();
-        const objectUrl = URL.createObjectURL(blob);
-        audio.src = objectUrl;
-        audio.play();
-    } catch (error) {
-        console.error(error);
-    }
+
+const baseUrl = 'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/';
+const playButton = document.getElementById('btn-play');
+
+
+
+
+playButton.addEventListener('click', () => {
+    const select = document.getElementById('sourate');
+    const selectedSourate = select.value;
+    const selectedVerset = document.getElementById('verset').value;
+    const audioUrl = `${baseUrl}${selectedSourate}.mp3`;
+    playAudio(audioUrl);
 });
 
-audio.addEventListener('ended', () => {
-    btnPlay.textContent = 'Lecture audio';
-});
-
-audio.addEventListener('play', () => {
-    btnPlay.textContent = 'Pause';
-});
-
-audio.addEventListener('pause', () => {
-    btnPlay.textContent = 'Lecture audio';
-});
+function playAudio(url) {
+    const audio = document.getElementById('audio');
+    audio.src = url;
+    audio.play();
+}
 
 
 //Définition des paramètres
@@ -79,8 +74,3 @@ form.addEventListener('submit', (e) => {
             console.error(error);
         });
 });
-
-
-
-
-

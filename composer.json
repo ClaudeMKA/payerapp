@@ -1,0 +1,11 @@
+{
+    "name": "rafiq/quran-transliteration",
+    "authors": [
+        {
+            "name": "john doe"
+        }
+    ],
+    "require": {
+        "knawat/phonetic-arabic": "^1.0"
+    }
+}
