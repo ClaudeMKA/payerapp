@@ -6,6 +6,6 @@
         }
     ],
     "require": {
-        "knawat/phonetic-arabic": "^1.0"
+        "alquran/tools": "^1.3"
     }
 }

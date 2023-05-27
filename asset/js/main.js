@@ -1,5 +1,4 @@
 
-console.log('dd')
 
 document.querySelector('#ville').addEventListener('input', function() {
     let adresse = this.value;
@@ -150,6 +149,7 @@ dropdownContent.addEventListener('click', function() {
             })
         }, 500);
     })
+
 
     // Supprimer la classe 'show' après un certain temps (par exemple 5 secondes)
     setTimeout(() => {

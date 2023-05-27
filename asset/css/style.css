@@ -7,6 +7,7 @@
 body{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
+    background-color: black;
 }
 a{
     list-style: none;
@@ -313,6 +314,43 @@ a{
 @media screen and (max-width: 390px) {
     .card {width: 132px;height: 166px;}
 }
+
+.srt-container {
+    position: relative;
+    display: inline-block;
+}
+
+.srt {
+    max-height: 200px; /* Hauteur maximale de la liste des sourates */
+    overflow-y: auto; /* Activation de la barre de défilement */
+    scrollbar-width: thin; /* Largeur de la barre de défilement */
+    scrollbar-color: #dcdcdc #888888; /* Couleurs de la barre de défilement (poignée et fond) */
+    border: 1px solid #ccc; /* Bordure du filtre */
+    border-radius: 4px; /* Bordures arrondies du filtre */
+    padding: 4px; /* Espacement interne du filtre */
+}
+
+/* Style de la poignée de la barre de défilement */
+.srt::-webkit-scrollbar-thumb {
+    background-color: #888888;
+}
+
+/* Style du fond de la barre de défilement */
+.srt::-webkit-scrollbar-track {
+    background-color: #dcdcdc;
+}
+.sourate-list{
+    cursor: pointer;
+}
+.entete{
+    display: flex;
+    justify-content: space-around;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+}
+
+
 footer{
     background-color: black ;
     height: 4rem;
@@ -324,7 +362,59 @@ footer{
 footer p{
     margin-top: 1.3rem;
 }
+.wrap_srt{
+    color: white;
+}
+.bm{
+    background-color: black;
+    width:100%;
+    max-width: 1000px;
+    margin:0 auto;
+    padding: 0 1rem;
+}
 
+.arabic_vrs{
+    font-size: 3rem;
+    text-align: end;
+}
+.entete #search-input{
+    background-color: transparent;
+    color: #FFFFFF; /* Couleur du texte */
+    border: none;
+}
+.entete #search-input::placeholder{
+    color: white;
+}
+.btn-verse {
+    background-color: #17a2b8; /* Couleur de fond */
+    color: #FFFFFF; /* Couleur du texte */
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.btn-loop {
+    background-color: #dc3545; /* Couleur de fond */
+    color: #FFFFFF; /* Couleur du texte */
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+.my-4{
+    margin-bottom: 0.5rem;
+}
+
+
+#launch-button{
+    background-color: #17a2b8; /* Couleur de fond */
+    color: #FFFFFF; /* Couleur du texte */
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
 
 
 
