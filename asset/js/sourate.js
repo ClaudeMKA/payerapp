@@ -194,8 +194,8 @@ function fetchVerseData(sourateValue) {
                 texteArabe += `<button class="btn-verse" data-audio="${baseUrl}${ayah.number}.mp3">Écouter le verset</button>`;
                 texteArabe += `<button class="btn-loop" data-audio="${baseUrl}${ayah.number}.mp3">Lire en boucle</button>`;
                 texteArabe += `</div>`;
-                texteArabe += `<p class="arabic_vrs">${tajweedText}</p>`;
-                texteArabe += `<p>${traductions[ayah.numberInSurah]}</p>`;
+                texteArabe += `<p class="arabic_vrs"><span>${tajweedText}</span></p>`;
+                texteArabe += `<p class="translate">${traductions[ayah.numberInSurah]}</p>`;
 
                 texteArabe += `</div>`;
                 texteArabe += `<hr class="my-4">`
@@ -319,7 +319,6 @@ function startRecitation() {
 
     const playAudioSequentially = () => {
         if (index >= audioButtons.length) {
-            // Tous les audios ont été joués, fin de la fonction récursive
             stopRecitation();
             return;
         }
@@ -330,8 +329,21 @@ function startRecitation() {
 
         audio.play();
 
+        // Souligner le verset en arabe correspondant et sa traduction
+        const arabicVerse = audioButton.closest('.wrap_srt').querySelector('.arabic_vrs');
+        const translation = audioButton.closest('.wrap_srt').querySelector('.translate');
+
+        arabicVerse.classList.add('highlight');
+        translation.classList.add('highlight');
+
+        // Faire défiler jusqu'au verset en cours de lecture
+        arabicVerse.scrollIntoView({ behavior: 'smooth' });
+
         audio.onended = () => {
-            // Passe à l'audio suivant après la fin de l'audio actuel
+            // Retirer le soulignement du verset en arabe et de sa traduction
+            arabicVerse.classList.remove('highlight');
+            translation.classList.remove('highlight');
+
             index++;
             playAudioSequentially();
         };
@@ -342,6 +354,7 @@ function startRecitation() {
     playAudioSequentially();
 }
 
+
 function stopRecitation() {
     isPlaying = false;
     launchButton.textContent = 'Lancer la lecture';
@@ -351,6 +364,7 @@ function stopRecitation() {
         audio = null;
     }
 }
+
 
 
 // Gestionnaire d'événement de clic sur l'ensemble du document

@@ -415,6 +415,10 @@ footer p{
     margin-right: 0.5rem;
     cursor: pointer;
 }
+.highlight {
+    color: #FFD700;
+    transition: all 0.4s;
+}
 
 
 
