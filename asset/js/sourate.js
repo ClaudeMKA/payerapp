@@ -169,6 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchVerseData(defaultSourateValue);
 });
+let elementWithClass = ''; // Déclarer la variable ici
+let elementpauseClass = ''; // Déclarer la variable ici
 
 // Fonction pour récupérer les données du verset à partir de l'API
 function fetchVerseData(sourateValue) {
@@ -180,19 +182,25 @@ function fetchVerseData(sourateValue) {
             response.json()
         ),
     ])
+
         .then(([arabe, francais]) => {
+
             const ayahs = arabe.data.ayahs;
             const traductions = francais.data.ayahs.reduce((acc, ayah) => {
                 acc[ayah.numberInSurah] = ayah.text;
                 return acc;
             }, {});
             let texteArabe = '';
+            let elementWithClass = ''; // Déclarer la variable ici
+            let elementpauseClass  = ''; // Déclarer la variable ici
             ayahs.forEach((ayah) => {
+                 elementWithClass =`<i class="fa-solid fa-arrows-rotate btn-loop" data-audio="${baseUrl}${ayah.number}.mp3"></i>`;
+                 elementpauseClass  =`<i class="fa-sharp fa-solid fa-play btn-verse verse" data-audio="${baseUrl}${ayah.number}.mp3"></i>`;
                 const tajweedText = convertTajweedToHTML(ayah.text); // Convertir le texte avec les balises Tajweed en HTML
                 texteArabe += `<div class="wrap_srt">`;
                 texteArabe += `<div class="btn_srt">`;
-                texteArabe += `<button class="btn-verse" data-audio="${baseUrl}${ayah.number}.mp3">Écouter le verset</button>`;
-                texteArabe += `<button class="btn-loop" data-audio="${baseUrl}${ayah.number}.mp3">Lire en boucle</button>`;
+                texteArabe += elementpauseClass;
+                texteArabe += elementWithClass;
                 texteArabe += `</div>`;
                 texteArabe += `<p class="arabic_vrs"><span>${tajweedText}</span></p>`;
                 texteArabe += `<p class="translate">${traductions[ayah.numberInSurah]}</p>`;
@@ -236,6 +244,7 @@ function addVerseAudioListeners() {
     }
 
     const loopButtons = document.querySelectorAll('.btn-loop');
+    console.log(loopButtons)
     loopButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const audioUrl = button.getAttribute('data-audio');
@@ -243,8 +252,6 @@ function addVerseAudioListeners() {
         });
     });
 }
-
-// Créer une variable pour stocker l'instance audio en cours de lecture
 
 // Fonction pour jouer l'audio en boucle ou arrêter la lecture en boucle
 function toggleAudioLoop(url, button) {
@@ -265,30 +272,58 @@ function toggleAudioLoop(url, button) {
             audio = null;
         });
         audio.play();
-        button.textContent = 'Arrêter la lecture en boucle';
-        audio.remove();
+
+        if (button.classList.contains('fa-arrows-rotate')) {
+            button.classList.replace('fa-arrows-rotate', 'fa-x');
+            button.classList.replace('fa-solid', 'fa-regular');
+        } else {
+            button.classList.replace('fa-x', 'fa-arrows-rotate');
+            button.classList.replace('fa-regular', 'fa-solid');
+        }
     } else {
         audio.pause();
         audio = null;
-        button.textContent = 'Lire en boucle';
+        button.classList.replace('fa-x', 'fa-arrows-rotate');
+        button.classList.replace('fa-regular', 'fa-solid');
     }
 }
 
-// Fonction pour jouer l'audio une seule fois
-function playAudio(url) {
-    // Arrêter la lecture en boucle si elle est active
-    const loopButton = document.querySelector('.btn-loop.active');
-    if (loopButton) {
-        const loopAudioUrl = loopButton.getAttribute('data-audio');
-        toggleAudioLoop(loopAudioUrl, loopButton);
-    }
+
+function addcouleurs() {
+    const verseButtons = document.querySelectorAll('.btn-verse');
+
+    verseButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const audioUrl = button.getAttribute('data-audio');
+            playAudio(audioUrl);
+            console.log('dd')
+            // Changer la couleur de l'icône en vert
+            button.classList.add('green-icon');
+        });
+    });
+}
+window.addEventListener('load', addcouleurs);
+
+    // ... autres fonctions
+function playAudio(url, solo) {
+    // ...
 
     // Vérifier si une instance audio est déjà en cours de lecture
     if (audio) {
         if (audio.paused) {
             audio.play();
+            if (solo) {
+                solo.classList.replace('fa-play', 'fa-pause');
+                solo.classList.remove('icon-white');
+                solo.classList.add('icon-green');
+            }
         } else {
             audio.pause();
+            if (solo) {
+                solo.classList.replace('fa-pause', 'fa-play');
+                solo.classList.remove('icon-green');
+                solo.classList.add('icon-white');
+            }
         }
     } else {
         audio = new Audio(url);
@@ -296,10 +331,24 @@ function playAudio(url) {
             // Une fois que l'audio est terminé, supprimer l'instance
             audio.remove();
             audio = null;
+
+            if (solo) {
+                solo.classList.replace('fa-pause', 'fa-play');
+                solo.classList.remove('icon-green');
+                solo.classList.add('icon-white');
+            }
         });
         audio.play();
+        if (solo) {
+            solo.classList.replace('fa-play', 'fa-pause');
+            solo.classList.remove('icon-white');
+            solo.classList.add('icon-green');
+        }
     }
+
+    // ...
 }
+
 const launchButton = document.getElementById('launch-button');
 let isPlaying = false;
 

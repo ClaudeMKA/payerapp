@@ -7,7 +7,7 @@
 body{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    background-color: black;
+    background-color: #1F2125;
 }
 a{
     list-style: none;
@@ -345,7 +345,7 @@ a{
 .entete{
     display: flex;
     justify-content: space-around;
-    background-color: black;
+    background-color: #343A40;
     color: white;
     padding: 1rem;
 }
@@ -366,7 +366,7 @@ footer p{
     color: white;
 }
 .bm{
-    background-color: black;
+    background-color: #1F2125;
     width:100%;
     max-width: 1000px;
     margin:0 auto;
@@ -386,21 +386,15 @@ footer p{
     color: white;
 }
 .btn-verse {
-    background-color: #17a2b8; /* Couleur de fond */
-    color: #FFFFFF; /* Couleur du texte */
-    border: none;
+
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;
     cursor: pointer;
 }
 
 .btn-loop {
-    background-color: #dc3545; /* Couleur de fond */
-    color: #FFFFFF; /* Couleur du texte */
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
     cursor: pointer;
+    transition: all0.4s;
 }
 .my-4{
     margin-bottom: 0.5rem;
@@ -418,6 +412,10 @@ footer p{
 .highlight {
     color: #FFD700;
     transition: all 0.4s;
+}
+
+.green-icon {
+    color: green;
 }
 
 
