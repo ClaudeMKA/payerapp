@@ -30,15 +30,25 @@
             <button id="launch-button">Lancer la sourate</button>
         </div>
     </div>
-    <div class="barre-bas position-absolute bottom-0 w-100" style="height: 1px; background-color: #FFFFFF;"></div>
 </div>
 <div class="bm">
 
 
 <div id="resultat"></div>
-<div style="height: 10px;"></div>
 <div id="resultat2"></div>
 </div>
+<div class="progress-container">
+    <div class="play-button">
+        <button><i class="fas fa-play"></i></button>
+    </div>
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+    <div class="pause-button">
+        <button><i class="fas fa-pause"></i></button>
+    </div>
+</div>
+
 <script src="asset/js/sourate.js"></script>
 </body>
 </html>

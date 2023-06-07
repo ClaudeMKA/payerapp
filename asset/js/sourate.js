@@ -204,9 +204,9 @@ function fetchVerseData(sourateValue) {
                 texteArabe += `</div>`;
                 texteArabe += `<p class="arabic_vrs"><span>${tajweedText}</span></p>`;
                 texteArabe += `<p class="translate">${traductions[ayah.numberInSurah]}</p>`;
+                texteArabe += `<hr class="my-4">`
 
                 texteArabe += `</div>`;
-                texteArabe += `<hr class="my-4">`
             });
             resultat.innerHTML = `<p><strong>Traduction en arabe :</strong></p>${texteArabe}`;
             addVerseAudioListeners();
@@ -218,15 +218,18 @@ function fetchVerseData(sourateValue) {
 }
 
 
-// Fonction pour ajouter les écouteurs d'événements aux boutons des versets
+/// Fonction pour ajouter les écouteurs d'événements aux boutons des versets
 function addVerseAudioListeners() {
     const verseButtons = document.querySelectorAll('.btn-verse');
+    console.log(verseButtons); // Afficher les éléments sélectionnés
+
     verseButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const audioUrl = button.getAttribute('data-audio');
-            playAudio(audioUrl);
+            playAudio(audioUrl,button);
         });
     });
+
     function addAudioListeners() {
         const audioElements = document.querySelectorAll('.audio-verse');
 
@@ -234,6 +237,7 @@ function addVerseAudioListeners() {
             audio.addEventListener('ended', handleAudioEnded);
         });
     }
+
     function handleAudioEnded(event) {
         const currentAudio = event.target;
         const nextAudio = currentAudio.nextElementSibling;
@@ -244,16 +248,22 @@ function addVerseAudioListeners() {
     }
 
     const loopButtons = document.querySelectorAll('.btn-loop');
-    console.log(loopButtons)
+    console.log(loopButtons);
     loopButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const audioUrl = button.getAttribute('data-audio');
             toggleAudioLoop(audioUrl, button);
         });
     });
+
+    // Autres codes utilisant `verseButtons` peuvent être placés ici
 }
 
-// Fonction pour jouer l'audio en boucle ou arrêter la lecture en boucle
+// ...
+
+// fetchVerseData(sourateValue);
+
+
 function toggleAudioLoop(url, button) {
     // Vérifier si l'audio est déjà en lecture
     if (!audio || audio.paused) {
@@ -276,78 +286,150 @@ function toggleAudioLoop(url, button) {
         if (button.classList.contains('fa-arrows-rotate')) {
             button.classList.replace('fa-arrows-rotate', 'fa-x');
             button.classList.replace('fa-solid', 'fa-regular');
+
+            // Ajouter la classe highlight pour le verset en arabe correspondant
+            const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+            const translation = button.closest('.wrap_srt').querySelector('.translate');
+            arabicVerse.classList.add('highlight');
+            translation.classList.add('highlight');
         } else {
             button.classList.replace('fa-x', 'fa-arrows-rotate');
             button.classList.replace('fa-regular', 'fa-solid');
+
+
         }
     } else {
         audio.pause();
         audio = null;
         button.classList.replace('fa-x', 'fa-arrows-rotate');
         button.classList.replace('fa-regular', 'fa-solid');
+        // Supprimer la classe highlight pour le verset en arabe correspondant
+        const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+        const translation = button.closest('.wrap_srt').querySelector('.translate');
+        arabicVerse.classList.remove('highlight');
+        translation.classList.remove('highlight');
     }
 }
-
-
-function addcouleurs() {
-    const verseButtons = document.querySelectorAll('.btn-verse');
-
-    verseButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const audioUrl = button.getAttribute('data-audio');
-            playAudio(audioUrl);
-            console.log('dd')
-            // Changer la couleur de l'icône en vert
-            button.classList.add('green-icon');
-        });
-    });
-}
-window.addEventListener('load', addcouleurs);
-
-    // ... autres fonctions
-function playAudio(url, solo) {
-    // ...
+function playAudio(url, button) {
+    let progressBar = document.querySelector('.progress');
+    const playButton = document.querySelector('.play-button');
+    const pauseButton = document.querySelector('.pause-button');
+    const psbutton = document.querySelector('.btn-verse');
 
     // Vérifier si une instance audio est déjà en cours de lecture
-    if (audio) {
+    if (audio && audio.src === url) {
         if (audio.paused) {
-            audio.play();
-            if (solo) {
-                solo.classList.replace('fa-play', 'fa-pause');
-                solo.classList.remove('icon-white');
-                solo.classList.add('icon-green');
+            audio.play(); // Relancer la lecture
+            if (button) {
+                button.classList.replace('fa-play', 'fa-pause');
+                button.classList.remove('icon-white');
+                button.classList.add('icon-green');
             }
         } else {
             audio.pause();
-            if (solo) {
-                solo.classList.replace('fa-pause', 'fa-play');
-                solo.classList.remove('icon-green');
-                solo.classList.add('icon-white');
+            if (button) {
+                button.classList.replace('fa-pause', 'fa-play');
+                button.classList.remove('icon-green');
+                button.classList.add('icon-white');
             }
         }
-    } else {
-        audio = new Audio(url);
-        audio.addEventListener('ended', () => {
-            // Une fois que l'audio est terminé, supprimer l'instance
-            audio.remove();
-            audio = null;
-
-            if (solo) {
-                solo.classList.replace('fa-pause', 'fa-play');
-                solo.classList.remove('icon-green');
-                solo.classList.add('icon-white');
-            }
-        });
-        audio.play();
-        if (solo) {
-            solo.classList.replace('fa-play', 'fa-pause');
-            solo.classList.remove('icon-white');
-            solo.classList.add('icon-green');
-        }
+        return; // Sortir de la fonction pour éviter de créer une nouvelle instance audio
     }
 
-    // ...
+    // Si une autre instance audio est en cours de lecture, l'arrêter
+    if (audio && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0; // Réinitialiser la position de lecture
+        audio.remove(); // Supprimer l'instance audio précédente
+        audio = null;
+    }
+    if (audio === null){
+        // Supprimer la classe highlight pour le verset en arabe correspondant
+        const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+        const translation = button.closest('.wrap_srt').querySelector('.translate');
+        arabicVerse.classList.remove('highlight');
+        translation.classList.remove('highlight');
+    }
+
+    audio = new Audio(url);
+
+    // Mettre à jour la barre de progression
+    audio.addEventListener('timeupdate', () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = progress + '%';
+    });
+
+    audio.addEventListener('ended', () => {
+        // Une fois que l'audio est terminé, supprimer l'instance
+        audio.remove();
+        audio = null;
+
+        if (button) {
+            button.classList.replace('fa-pause', 'fa-play');
+            button.classList.remove('icon-green');
+            button.classList.add('icon-white');
+
+            // Supprimer la classe highlight pour le verset en arabe correspondant
+            const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+            const translation = button.closest('.wrap_srt').querySelector('.translate');
+            arabicVerse.classList.remove('highlight');
+            translation.classList.remove('highlight');
+        }
+    });
+
+    psbutton.addEventListener('click', () => {
+        if (button.classList.contains('fa-play')) {
+            pauseAudio();
+        } else if (audio && audio.paused) {
+            resumeAudio();
+        }
+    });
+
+    const pauseAudio = () => {
+        if (audio && !audio.paused) {
+            audio.pause();
+
+            // Supprimer la classe highlight pour le verset en arabe correspondant
+            const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+            const translation = button.closest('.wrap_srt').querySelector('.translate');
+            arabicVerse.classList.remove('highlight');
+            translation.classList.remove('highlight');
+        }
+    };
+
+    const resumeAudio = () => {
+        if (audio && audio.paused) {
+            audio.play();
+
+            // Mettre à jour la classe highlight pour le verset en arabe correspondant
+            const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+            const translation = button.closest('.wrap_srt').querySelector('.translate');
+            arabicVerse.classList.add('highlight');
+            translation.classList.add('highlight');
+        }
+    };
+
+    playButton.addEventListener('click', resumeAudio);
+    pauseButton.addEventListener('click', pauseAudio);
+
+    audio.play();
+    if (button) {
+        button.classList.replace('fa-play', 'fa-pause');
+        button.classList.remove('icon-white');
+        button.classList.add('icon-green');
+
+        // Mettre à jour la classe highlight pour le verset en arabe correspondant
+        const arabicVerse = button.closest('.wrap_srt').querySelector('.arabic_vrs');
+        const translation = button.closest('.wrap_srt').querySelector('.translate');
+        arabicVerse.classList.add('highlight');
+        translation.classList.add('highlight');
+    }
 }
+
+
+
+
+// ... autres fonctions
 
 const launchButton = document.getElementById('launch-button');
 let isPlaying = false;
@@ -358,13 +440,18 @@ function toggleRecitation() {
     if (isPlaying) {
         stopRecitation();
     } else {
-        startRecitation();
+        if (!audio) {
+            startRecitation();
+        }
     }
 }
 
 function startRecitation() {
     const audioButtons = document.querySelectorAll('.btn-verse');
     let index = 0;
+    const progressBar = document.querySelector('.progress');
+    const playButton = document.querySelector('.play-button');
+    const pauseButton = document.querySelector('.pause-button');
 
     const playAudioSequentially = () => {
         if (index >= audioButtons.length) {
@@ -376,11 +463,15 @@ function startRecitation() {
         const audioSrc = audioButton.getAttribute('data-audio');
         audio = new Audio(audioSrc);
 
-        audio.play();
-
         // Souligner le verset en arabe correspondant et sa traduction
         const arabicVerse = audioButton.closest('.wrap_srt').querySelector('.arabic_vrs');
         const translation = audioButton.closest('.wrap_srt').querySelector('.translate');
+
+        // Mettre à jour la barre de progression
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = progress + '%';
+        });
 
         arabicVerse.classList.add('highlight');
         translation.classList.add('highlight');
@@ -396,12 +487,74 @@ function startRecitation() {
             index++;
             playAudioSequentially();
         };
+
+        audio.play();
+        playButton.style.color = 'green';
+        pauseButton.style.color = '';
     };
+
+    const pauseAudio = () => {
+        if (audio && !audio.paused) {
+            audio.pause();
+            pauseButton.style.color = 'green';
+            playButton.style.color = '';
+        }
+    };
+
+    const resumeAudio = () => {
+        if (audio && audio.paused) {
+            audio.play();
+            playButton.style.color = 'green';
+            pauseButton.style.color = '';
+        }
+    };
+
+    const stopRecitation = () => {
+        pauseAudio();
+        index = 0;
+        audio = null;
+        progressBar.style.width = '0';
+    };
+
+    playButton.addEventListener('click', resumeAudio);
+    pauseButton.addEventListener('click', pauseAudio);
 
     isPlaying = true;
     launchButton.textContent = 'Arrêter la lecture';
-    playAudioSequentially();
+    playAudioSequentially(); // Appel de la fonction playAudioSequentially pour commencer la récitation
 }
+
+
+const playAudioSequentially = () => {
+    if (index >= audioButtons.length) {
+        stopRecitation();
+        return;
+    }
+
+    const audioButton = audioButtons[index];
+    const audioSrc = audioButton.getAttribute('data-audio');
+    audio = new Audio(audioSrc);
+
+    // Mettre à jour la classe highlight pour les versets en arabe correspondants
+    const arabicVerse = audioButton.closest('.wrap_srt').querySelector('.arabic_vrs');
+    arabicVerse.classList.add('highlight');
+
+    audio.play();
+
+    // Mettre à jour la barre de progression
+    audio.addEventListener('timeupdate', () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = progress + '%';
+    });
+
+    // Retirer la classe highlight lorsque l'audio se termine
+    audio.addEventListener('ended', () => {
+        arabicVerse.classList.remove('highlight');
+        index++;
+        playAudioSequentially();
+    });
+};
+
 
 
 function stopRecitation() {

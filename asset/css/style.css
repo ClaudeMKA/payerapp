@@ -327,7 +327,7 @@ a{
     scrollbar-color: #dcdcdc #888888; /* Couleurs de la barre de défilement (poignée et fond) */
     border: 1px solid #ccc; /* Bordure du filtre */
     border-radius: 4px; /* Bordures arrondies du filtre */
-    padding: 4px; /* Espacement interne du filtre */
+    padding: 1px; /* Espacement interne du filtre */
 }
 
 /* Style de la poignée de la barre de défilement */
@@ -348,6 +348,8 @@ a{
     background-color: #343A40;
     color: white;
     padding: 1rem;
+    align-items: center;
+
 }
 
 
@@ -381,10 +383,19 @@ footer p{
     background-color: transparent;
     color: #FFFFFF; /* Couleur du texte */
     border: none;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
 }
 .entete #search-input::placeholder{
     color: white;
+    caret-color: transparent;
 }
+#search-input:focus {
+    outline: none;
+    border: none;
+    /* Autres styles personnalisés */
+}
+
 .btn-verse {
 
     padding: 0.5rem 1rem;
@@ -402,12 +413,13 @@ footer p{
 
 
 #launch-button{
-    background-color: #17a2b8; /* Couleur de fond */
-    color: #FFFFFF; /* Couleur du texte */
+    color: black;
     border: none;
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;
     cursor: pointer;
+    font-weight: bold;
+    border-radius: 1rem;
 }
 .highlight {
     color: #FFD700;
@@ -416,8 +428,49 @@ footer p{
 
 .green-icon {
     color: green;
+}.progress-container {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     width: 100%;
+     height: 40px;
+     background-color: #343A40;
+     position: fixed;
+     bottom: 0;
+     left: 0;
+ }
+
+
+.play-button,
+.pause-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 10px;
 }
 
 
+.progress {
+    width: 0;
+    height: 100%;
+    background-color: white;
+}
 
+.play-button button,
+.pause-button button {
+margin-left: 5rem;
+    margin-right: 5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 
+.play-button button i,
+.pause-button button i {
+    color: white;
+    font-size: 16px;
+}
