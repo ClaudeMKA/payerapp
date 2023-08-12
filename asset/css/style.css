@@ -7,7 +7,6 @@
 body{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    background-color: #1F2125;
 }
 a{
     list-style: none;
@@ -209,34 +208,34 @@ a{
     justify-content: space-between;
     color: white;
 }
- .img_logo2{
+.img_logo2{
     width: 40%;
     cursor: pointer;
 }
 .wrap_home nav ul {
     display: flex;
-   gap: 3rem;
+    gap: 3rem;
     cursor: pointer
 }
- .row{
-     width:100%;
-     max-width: 1300px;
-     margin:0 auto;
-     padding: 0 1rem;
+.row{
+    width:100%;
+    max-width: 1300px;
+    margin:0 auto;
+    padding: 0 1rem;
     display: flex;
     height: 50%;
     gap: 3rem;
-     text-align: -webkit-center;
- }
+    text-align: -webkit-center;
+}
 
- .col2{
-     width: 50%;
-     display: flex;
+.col2{
+    width: 50%;
+    display: flex;
     flex-direction: column;
-     align-items: center;
-     gap: 1rem;
-     text-align: -webkit-center;
- }
+    align-items: center;
+    gap: 1rem;
+    text-align: -webkit-center;
+}
 .card h2{
     color: white;
     margin-top: 4rem;
@@ -297,6 +296,75 @@ a{
 .card p.show {
     opacity: 1;
 }
+.btn_form{
+    cursor: pointer;
+}
+/* Style de la modale */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    opacity: 0; /* Initiallement transparent */
+    visibility: hidden; /* Cachée */
+    transition: opacity 0.5s ease-in-out; /* Transition pour opacité seulement */
+}
+
+/* Appliquer la transition en ajoutant la classe active */
+.modal.active {
+    display: block;
+    opacity: 1; /* Rendre la modale opaque */
+    visibility: visible; /* Rendre la modale visible */
+}
+
+/* Contenu de la modale */
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%;
+    transition: opacity 0.5s ease-in-out; /* Transition pour opacité seulement */
+    text-align: -webkit-center;
+    background-image: url("../image/carte_fond.png");
+    background-size: cover;
+
+}
+#prayerForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 50%;
+    TEXT-ALIGN: -WEBKIT-CENTER;
+}
+#prayerForm button{
+    background-color: blanchedalmond;
+    border: 0.2px solid #181818;
+    padding: 0.3rem;
+    cursor: pointer;
+}
+
+
+/* Bouton de fermeture */
+.close {
+    color: black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #181818;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
 
 /* Responsive  */
 
@@ -319,38 +387,86 @@ a{
     position: relative;
     display: inline-block;
 }
-
-.srt {
-    max-height: 200px; /* Hauteur maximale de la liste des sourates */
-    overflow-y: auto; /* Activation de la barre de défilement */
-    scrollbar-width: thin; /* Largeur de la barre de défilement */
-    scrollbar-color: #dcdcdc #888888; /* Couleurs de la barre de défilement (poignée et fond) */
-    border: 1px solid #ccc; /* Bordure du filtre */
-    border-radius: 4px; /* Bordures arrondies du filtre */
-    padding: 1px; /* Espacement interne du filtre */
-}
-
-/* Style de la poignée de la barre de défilement */
-.srt::-webkit-scrollbar-thumb {
-    background-color: #888888;
-}
-
-/* Style du fond de la barre de défilement */
-.srt::-webkit-scrollbar-track {
-    background-color: #dcdcdc;
-}
-.sourate-list{
-    cursor: pointer;
-}
-.entete{
+/* */
+.bloc_angle_prayer{
     display: flex;
-    justify-content: space-around;
-    background-color: #343A40;
-    color: white;
-    padding: 1rem;
-    align-items: center;
+    place-content: center;
+    gap: 2rem;
+}
+.angle {
+    /* Définir les propriétés de base pour le bouton */
+    color: black;
+    background-color: transparent;
+    border: 1.5px solid #efe7d7;
+    border-radius: 1px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.angle {
+    background-color: #f0e6d8;
+    color: black;
 
 }
+
+
+
+/* Si le bouton est actif */
+.angle.active {
+    background-color: #007bff;
+}
+
+/* Style du texte à l'intérieur du bouton */
+.angle p {
+    margin: 0;
+    color: black;
+    font-size: 16px;
+ font-family: 'Poppins', sans-serif;
+}
+
+/* Ajoutez un espace entre les boutons */
+.angle + .angle {
+    margin-left: 10px;
+}
+#m1 {
+}
+
+/* Style lorsque le bouton est actif */
+.angle-active p {
+    color: #ff6b2f;
+;}
+/*.srt {*/
+/*    max-height: 200px; !* Hauteur maximale de la liste des sourates *!*/
+/*    overflow-y: auto; !* Activation de la barre de défilement *!*/
+/*    scrollbar-width: thin; !* Largeur de la barre de défilement *!*/
+/*    scrollbar-color: #dcdcdc #888888; !* Couleurs de la barre de défilement (poignée et fond) *!*/
+/*    border: 1px solid #ccc; !* Bordure du filtre *!*/
+/*    border-radius: 4px; !* Bordures arrondies du filtre *!*/
+/*    padding: 1px; !* Espacement interne du filtre *!*/
+/*}*/
+
+/*!* Style de la poignée de la barre de défilement *!*/
+/*.srt::-webkit-scrollbar-thumb {*/
+/*    background-color: #888888;*/
+/*}*/
+
+/*!* Style du fond de la barre de défilement *!*/
+/*.srt::-webkit-scrollbar-track {*/
+/*    background-color: #dcdcdc;*/
+/*}*/
+/*.sourate-list{*/
+/*    cursor: pointer;*/
+/*}*/
+/*.entete{*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    background-color: #343A40;*/
+/*    color: white;*/
+/*    padding: 1rem;*/
+/*    align-items: center;*/
+
+/*}*/
 
 
 footer{
@@ -361,116 +477,116 @@ footer{
     padding: 1rem;
     color: white;
 }
-footer p{
-    margin-top: 1.3rem;
-}
-.wrap_srt{
-    color: white;
-}
-.bm{
-    background-color: #1F2125;
-    width:100%;
-    max-width: 1000px;
-    margin:0 auto;
-    padding: 0 1rem;
-}
+/*footer p{*/
+/*    margin-top: 1.3rem;*/
+/*}*/
+/*.wrap_srt{*/
+/*    color: white;*/
+/*}*/
+/*.bm{*/
+/*    background-color: #1F2125;*/
+/*    width:100%;*/
+/*    max-width: 1000px;*/
+/*    margin:0 auto;*/
+/*    padding: 0 1rem;*/
+/*}*/
 
-.arabic_vrs{
-    font-size: 3rem;
-    text-align: end;
-}
-.entete #search-input{
-    background-color: transparent;
-    color: #FFFFFF; /* Couleur du texte */
-    border: none;
-    margin-top: 1rem;
-    margin-left: 0.5rem;
-}
-.entete #search-input::placeholder{
-    color: white;
-    caret-color: transparent;
-}
-#search-input:focus {
-    outline: none;
-    border: none;
-    /* Autres styles personnalisés */
-}
+/*.arabic_vrs{*/
+/*    font-size: 3rem;*/
+/*    text-align: end;*/
+/*}*/
+/*.entete #search-input{*/
+/*    background-color: transparent;*/
+/*    color: #FFFFFF; !* Couleur du texte *!*/
+/*    border: none;*/
+/*    margin-top: 1rem;*/
+/*    margin-left: 0.5rem;*/
+/*}*/
+/*.entete #search-input::placeholder{*/
+/*    color: white;*/
+/*    caret-color: transparent;*/
+/*}*/
+/*#search-input:focus {*/
+/*    outline: none;*/
+/*    border: none;*/
+/*    !* Autres styles personnalisés *!*/
+/*}*/
 
-.btn-verse {
+/*.btn-verse {*/
 
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-}
+/*    padding: 0.5rem 1rem;*/
+/*    margin-right: 0.5rem;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.btn-loop {
-    cursor: pointer;
-    transition: all0.4s;
-}
-.my-4{
-    margin-bottom: 0.5rem;
-}
-
-
-#launch-button{
-    color: black;
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 1rem;
-}
-.highlight {
-    color: #FFD700;
-    transition: all 0.4s;
-}
-
-.green-icon {
-    color: green;
-}.progress-container {
-     display: flex;
-     justify-content: space-around;
-     align-items: center;
-     width: 100%;
-     height: 40px;
-     background-color: #343A40;
-     position: fixed;
-     bottom: 0;
-     left: 0;
- }
+/*.btn-loop {*/
+/*    cursor: pointer;*/
+/*    transition: all0.4s;*/
+/*}*/
+/*.my-4{*/
+/*    margin-bottom: 0.5rem;*/
+/*}*/
 
 
-.play-button,
-.pause-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/*#launch-button{*/
+/*    color: black;*/
+/*    border: none;*/
+/*    padding: 0.5rem 1rem;*/
+/*    margin-right: 0.5rem;*/
+/*    cursor: pointer;*/
+/*    font-weight: bold;*/
+/*    border-radius: 1rem;*/
+/*}*/
+/*.highlight {*/
+/*    color: #FFD700;*/
+/*    transition: all 0.4s;*/
+/*}*/
 
-.progress-bar {
-    flex: 1;
-    height: 10px;
-}
+/*.green-icon {*/
+/*    color: green;*/
+/*}.progress-container {*/
+/*     display: flex;*/
+/*     justify-content: space-around;*/
+/*     align-items: center;*/
+/*     width: 100%;*/
+/*     height: 40px;*/
+/*     background-color: #343A40;*/
+/*     position: fixed;*/
+/*     bottom: 0;*/
+/*     left: 0;*/
+/* }*/
 
 
-.progress {
-    width: 0;
-    height: 100%;
-    background-color: white;
-}
+/*.play-button,*/
+/*.pause-button {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
 
-.play-button button,
-.pause-button button {
-margin-left: 5rem;
-    margin-right: 5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+/*.progress-bar {*/
+/*    flex: 1;*/
+/*    height: 10px;*/
+/*}*/
 
-.play-button button i,
-.pause-button button i {
-    color: white;
-    font-size: 16px;
-}
+
+/*.progress {*/
+/*    width: 0;*/
+/*    height: 100%;*/
+/*    background-color: white;*/
+/*}*/
+
+/*.play-button button,*/
+/*.pause-button button {*/
+/*    margin-left: 5rem;*/
+/*    margin-right: 5rem;*/
+/*    background: none;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.play-button button i,*/
+/*.pause-button button i {*/
+/*    color: white;*/
+/*    font-size: 16px;*/
+/*}*/

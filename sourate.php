@@ -19,7 +19,7 @@
 <div class="head">
     <div class="entete">
         <div class="home">
-            Accueil
+            <a href="index.html">Accueil</a>
         </div>
         <div class="srt">
             <input type="text" id="search-input" placeholder="Rechercher une sourate" />
