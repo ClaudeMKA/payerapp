@@ -1,4 +1,6 @@
-<!doctype html>
+<?php
+$claude = true ;
+?><!doctype html>
 <html lang=fr>
 <head>
     <meta charset="UTF-8">
@@ -9,7 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <link rel="stylesheet" href="asset/css/style.css">
+
+
 
 </head>
 <body>
@@ -26,24 +32,25 @@
         <h2>Téléchargez le calendrier de prière</h2>
         <form id="prayerForm">
             <div class="chose_adress">
-                <label for="adresse">Adresse et Code postale :</label>
-                <input type="text" id="adresse" name="adresse" class="form_calendar" required
-                >
+            <label for="adresse">Adresse et Code postale :</label>
+            <input type="text" id="adresse" name="adresse" class="form_calendar" required
+            >
             </div>
             <div class="chose_angle">
-                <label for="angle">Choisissez l'angle :</label>
-                <select id="angle" name="angle">
-                    <option value="12">Angle 12</option>
-                    <option value="15">Angle 15</option>
-                    <option value="18">Angle 18</option>
-                </select>
+            <label for="angle">Choisissez l'angle :</label>
+            <select id="angle" name="angle">
+                <option value="12">Angle 12</option>
+                <option value="15">Angle 15</option>
+                <option value="18">Angle 18</option>
+            </select>
             </div>
             <div class="download_pdf">
-                <button type="submit" class="button_calendar" id="generatePdfButton">Télécharger le PDF</button>
+            <button type="submit" class="button_calendar" id="generatePdfButton">Télécharger le PDF</button>
             </div>
         </form>
     </div>
 </div>
+
 <div class="container">
     <div class="wrap_home">
         <div class="navbar">
@@ -53,12 +60,13 @@
             <nav>
                 <ul>
                     <li><a href=""> Acceuil </a> </li>
-                    <li><a href="sourate.php">Coran </a> </li>
+                    <!--            <li><a href="sourate.php">Coran </a> </li>-->
                     <li><a href="contact.php">Contact </a> </li>
                 </ul>
             </nav>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col2">
@@ -114,7 +122,7 @@
 
 <div class="calendrier" id="calendrier">
     <p class="mois_arab"></p>
-    <p class="select_angle"></p>
+<p class="select_angle"></p>
 </div>
 <script src="es6-promise.auto.min.js"></script>
 <script src="jspdf.min.js"></script>
@@ -122,11 +130,11 @@
 <script src="html2pdf.min.js"></script>
 <script src="asset/js/main.js"></script>
 
-</div>
-
-<script src="asset/js/main.js"></script>
 <footer>
     <p> Design and website by Claude Miakouikila </p>
 </footer>
+
 </body>
 </html>
+
+
