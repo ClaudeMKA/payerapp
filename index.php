@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="asset/css/style.css">
 
 </head>
@@ -51,19 +52,27 @@
                 <img src="asset/image/logo.png" alt="logo" class="img_logo2">
             </div>
             <nav>
-                <ul>
-                    <li><a href=""> Acceuil </a> </li>
-                    <li><a href="sourate.php">Coran </a> </li>
-                    <li><a href="contact.php">Contact </a> </li>
+                <ul id="burger-icon">
+                    <li ><i class="fa-solid fa-bars"></i></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
                 </ul>
             </nav>
         </div>
     </div>
+    <div class="burger-menu">
+        <button id="close-burger"><i class="fa-solid fa-times"></i></button>
+        <ul>
+            <li class="contact"><a href="#"> Contact </a></li>
+            <li class="methode"><a href="#">Les méthodes de calcules</a></li>
+        </ul>
+    </div>
+
 
     <div class="row">
         <div class="col2">
             <h1 class="nn"> RAFIQ AL-IMANE</h1>
-            <p> Rafiq Al-Imane est une application web qui vous aide à pratiquer votre religion en vous offrant des fonctionnalités telles que la recherche des horaires de prière et la lecture du Quran, ainsi que d'autres fonctionnalités à venir.</p>
+            <p> Rafiq Al-Imane est une application web qui vous aide à pratiquer votre religion en vous offrant des fonctionnalités telles que la recherche des horaires de prière,Calendrier de prières , ainsi que d'autres fonctionnalités à venir.</p>
             <div class="formulaire">
                 <form class="form" method="post">
                     <label for="ville"> <h1> Votre adresse : </h1></label>
@@ -122,7 +131,7 @@
 <script src="html2pdf.min.js"></script>
 <script src="asset/js/main.js"></script>
 
-</div>
+
 
 <script src="asset/js/main.js"></script>
 <footer>
